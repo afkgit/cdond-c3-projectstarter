@@ -12,12 +12,8 @@ commands:
           mentions: "@#03-cloud-devops"
           event: fail
           template: basic_fail_1
-  notify_on_success:
-    steps:
-      - slack/notify:
-          mentions: "@#03-cloud-devops"
-          event: pass
-          template: success_tagged_deployment_1
+
+
   # destroy-environment:
   #   description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
   #   parameters:
@@ -67,7 +63,6 @@ jobs:
           paths: [frontend/node_modules]
           key: frontend-deps
       - notify_on_failure
-      - notify_on_success
 
   build-backend:
     docker:
@@ -86,7 +81,6 @@ jobs:
           paths: [backend/node_modules]
           key: backend-deps
       - notify_on_failure
-      - notify_on_success
 
   test-frontend:
     docker:
@@ -320,6 +314,15 @@ jobs:
 #               # your code here
 #             fi
 
+  notify_on_success:
+    docker:
+      - image: cimg/node:13.8.0
+    steps:
+      - run: echo "Sending status update"
+      - slack/notify:
+          mentions: "@#03-cloud-devops"
+          event: pass
+          template: success_tagged_deployment_1
 
 workflows:
   default:
