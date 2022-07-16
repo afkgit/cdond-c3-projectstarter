@@ -335,7 +335,7 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-            - notify_on_success:
+      - notify_on_success:
           requires:
             - test-frontend
             - test-backend
