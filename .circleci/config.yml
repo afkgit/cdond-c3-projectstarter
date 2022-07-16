@@ -319,7 +319,7 @@ jobs:
     steps:
       - slack/notify:
           event: pass
-          channel: 
+          channel: 03-cloud-devops
           template: success_tagged_deployment_1
 
 workflows:
