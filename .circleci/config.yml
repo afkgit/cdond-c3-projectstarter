@@ -11,7 +11,7 @@ commands:
       - slack/notify:
           event: fail
           channel: "#03-cloud-devops"
-          channel: "https://alx-nd-c1.slack.com/archives/C03DAJYL3SM"
+          #channel: "https://alx-nd-c1.slack.com/archives/C03DAJYL3SM"
           template: basic_fail_1
 
   # destroy-environment:
@@ -321,7 +321,7 @@ jobs:
       - slack/notify:
           event: pass
           channel: "#03-cloud-devops"
-          channel: "https://alx-nd-c1.slack.com/archives/C03DAJYL3SM"
+          #channel: "https://alx-nd-c1.slack.com/archives/C03DAJYL3SM"
           template: success_tagged_deployment_1
 
 workflows:
