@@ -41,44 +41,7 @@ commands:
             name: Install Node.js 13
             command: |
                  curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
-                 sudo apt install -y nodejs -y
-
-  # destroy-environment:
-  #   description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-  #   parameters:
-  #     WorkflowID:
-  #       type: string
-  #       default: ${CIRCLE_WORKFLOW_ID:0:7}  
-  #   steps:
-  #     - run:
-  #         name: Destroy environments
-  #         when: on_fail
-  #         command: |
-  #           aws s3 rm s3://udapeople-<<parameters.WorkflowID>> --recursive
-  #           aws cloudformation delete-stack \
-  #           --stack-name udapeople-backend-<<parameters.WorkflowID>>
-  #           aws cloudformation delete-stack \
-  #           --stack-name udapeople-frontend-<<parameters.WorkflowID>>
-
-  # revert-migrations:
-  #   description: Revert the last migration if successfully run in the current workflow.
-  #   parameters:
-  #     WorkflowID:
-  #       type: string
-  #       default: ${CIRCLE_WORKFLOW_ID:0:7}      
-  #   steps:
-  #     - run:
-  #         name: Revert migrations
-  #         when: on_fail
-  #         command: |
-  #           SUCCESS = $(curl --insecure https://kvdb.io/${KVDB_BUCKET}/migration_<< parameter.Workflow_ID >>)
-  #           if(( $SUCCESS==1 )); 
-  #           then
-  #             cd ~/project/backend
-  #             npm install
-  #             npm run migration:revert
-  #           fi
-            
+                 sudo apt install -y nodejs -y      
 
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -255,7 +218,6 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # Here's where you will add some code to rollback on failure 
       - destroy-environment:
           WorkflowID: ${CIRCLE_WORKFLOW_ID:0:7}    
 
@@ -303,8 +265,7 @@ jobs:
               if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
               then
                 curl https://kvdb.io/DQNhEsjNdti7X16fDBKnRD/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
-              fi
-     # Here's where you will add some code to rollback on failure      
+              fi    
       - destroy-environment:
           WorkflowID: ${CIRCLE_WORKFLOW_ID:0:7}
 
@@ -344,8 +305,7 @@ jobs:
             cd frontend
             npm install
             npm run build
-            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-      # Here's where you will add some code to rollback on failure      
+            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive     
       - destroy-environment:
           WorkflowID: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
@@ -388,8 +348,7 @@ jobs:
 
             cd .circleci/ansible
             cat inventory.txt
-            ansible-playbook -i inventory.txt deploy-backend.yml
-      # Here's where you will add some code to rollback on failure  
+            ansible-playbook -i inventory.txt deploy-backend.yml  
       - destroy-environment:
           WorkflowID: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
@@ -410,9 +369,9 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text)
             
-            export API_URL="http://${BACKEND_PUBLIC_IP}:3030"
+            export API_URL=http://${BACKEND_PUBLIC_IP}:3030
             echo $API_URL
-            if curl -s ${API_URL}/api/status | grep "ok"
+            if curl -s $API_URL/api/status | grep "ok"
             then
               exit 0
             else
@@ -424,12 +383,10 @@ jobs:
             FRONTEND_WEBSITE=http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.${AWS_DEFAULT_REGION}.amazonaws.com
             if curl -s $FRONTEND_WEBSITE | grep "Welcome"
             then
-              exit 1
+              exit 0
             else
-              exit 2
-            fi
-
-      # Here's where you will add some code to rollback on failure  
+              exit 1
+            fi  
       - destroy-environment:
           WorkflowID: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
