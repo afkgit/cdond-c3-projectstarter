@@ -261,9 +261,13 @@ jobs:
                 echo ${CIRCLE_WORKFLOW_ID:0:7}
                 curl https://kvdb.io/DQNhEsjNdti7X16fDBKnRD/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
               fi
-      - destroy-environment
-      - revert-migrations
-      
+     # Here's where you will add some code to rollback on failure      
+      - destroy_environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+
+      - revert-migrations:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+
 #   deploy-frontend:
 #     docker:
 #       # Docker image here that supports AWS CLI
