@@ -348,11 +348,11 @@ jobs:
             export TYPEORM_MIGRATIONS_DIR=./src/migrations 
             export TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts 
             export TYPEORM_MIGRATIONS=./src/migrations/*.ts 
-            export TYPEORM_HOST=$TYPEORM_HOST 
-            export TYPEORM_PORT=$TYPEORM_PORT 
-            export TYPEORM_USERNAME=$TYPEORM_USERNAME 
-            export TYPEORM_PASSWORD=$TYPEORM_PASSWORD 
-            export TYPEORM_DATABASE=$TYPEORM_DATABASE 
+            # export TYPEORM_HOST=$TYPEORM_HOST 
+            # export TYPEORM_PORT=$TYPEORM_PORT 
+            # export TYPEORM_USERNAME=$TYPEORM_USERNAME 
+            # export TYPEORM_PASSWORD=$TYPEORM_PASSWORD 
+            # export TYPEORM_DATABASE=$TYPEORM_DATABASE 
 
 
             cd .circleci/ansible
