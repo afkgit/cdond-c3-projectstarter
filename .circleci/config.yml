@@ -342,11 +342,8 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            # export TYPEORM_MIGRATIONS_DIR=./src/migrations
-            # export TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts
-            # export TYPEORM_MIGRATIONS=./src/migrations/*.ts
 
-            # export ENVIRONMENT=production 
+            # export ENVIRONMENT=glee 
             export TYPEORM_CONNECTION=postgres 
             export TYPEORM_MIGRATIONS_DIR=./src/migrations 
             export TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts 
