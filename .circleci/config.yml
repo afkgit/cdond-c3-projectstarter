@@ -214,11 +214,11 @@ jobs:
             cd ~/project/.circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
             cat ~/project/.circleci/ansible/inventory.txt
-      - run:
-          name: Install node exporter
-          command: |
-            cd .circleci/ansible
-            ansible-playbook -i inventory.txt configure-node-exporter.yml
+      # - run:
+      #     name: Install node exporter
+      #     command: |
+      #       cd .circleci/ansible
+      #       ansible-playbook -i inventory.txt configure-node-exporter.yml
       - destroy-environment:
           WorkflowID: ${CIRCLE_WORKFLOW_ID:0:7}
 
