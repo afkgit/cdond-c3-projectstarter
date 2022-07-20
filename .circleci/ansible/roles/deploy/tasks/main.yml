@@ -38,7 +38,7 @@
 - name: "Extract backend files"
   become: true
   unarchive:
-    src: files/artifact.tar.gz
+    src: .circleci/ansible/roles/deploy/files/artifact.tar.gz
     dest: /home/ubuntu
 
 - name: "Executing node app"
