@@ -1,95 +1,30 @@
----
-- name: "Update packages"
-  become: true
-  apt:
-    update_cache: yes
-
-- name: "upgrade packages"
-  become: true
-  apt:
-    upgrade: yes
-
-- name: "remove unused dependencies"
-  become: true
-  apt:
-    autoremove: yes
-
-- name: "install dependencies"
-  become: true
-  apt:
-    # name: ["nodejs", "npm"]
-    name: nodejs
-    state: latest
-    update_cache: yes
-
-- name: "install pm2 package"
-  become: true
-  npm:
-    name: pm2
-    global: yes
-    production: yes
-    state: present
-
-- name: "Creates directory"
+- name: "Creates backend app directory"
   file:
-    path: ~/web
+    path: ~/backend-app
     state: directory
 
-- name: "Extract backend files"
-  become: true
+- name: "Unarchive backend files"
   unarchive:
-    src: .circleci/ansible/roles/deploy/files/artifact.tar.gz
-    dest: /home/ubuntu
+    src: artifact.tar.gz
+    dest: ~/backend-app
 
-- name: "Executing node app"
+- name: "Installing Node Dependencies"
+  shell: |
+    cd ~/backend-app
+    npm i
+- name: "Executing Node app with PM2"
+  shell: |
+    cd ~/backend-app/dist
+    pm2 stop default
+    pm2 start -f ./main.js
+  register: execute_node
+
+- name: print message
+  debug:
+    msg: "{{ execute_node.stdout_lines }}"
+
+- name: "Configure pm2 to start as service"
   become: true
   shell: |
-    npm install
-    pm2 stop default
-    pm2 start npm -- start
-
-# ---
-# - name: "Creates backend app directory"
-#   file:
-#      path: ~/backend-app
-#      state: directory
-
-# - name: "Unarchive backend files"
-#   unarchive:
-#      src: artifact.tar.gz
-#      dest: ~/backend-app
-
-# - name: "Extract artifact"
-#   become: true
-#   unarchive:
-#      src: files/artifact.tar.gz
-#      dest: /home/ubuntu
-
-# - name: "install Node Dependencies"
-#   shell: |
-#      cd ~/backend-app
-#      npm i
-
-# - name: "Executing Node app with PM2"
-#   shell: |
-#      cd ~/backend-app/dist
-#      pm2 stop default
-#      pm2 start main.js
-
-#   register: execute_node
-
-# - name: "print message"
-#   debug: 
-#      msg: "{{ execute_node.stdout_lines }}"
-# - name: Start app
-#   become: true
-#   shell: |
-#      cd /home/ubuntu
-#      npm install
-#      pm2 stop default
-#      pm2 start npm
-
-# - name: "Configure pm2 to start as service"
-#   become: true
-#   shell: |
-#      env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
+    sudo su -c "env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu"
+    pm2 save
