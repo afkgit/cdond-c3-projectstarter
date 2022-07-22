@@ -117,38 +117,38 @@ jobs:
           key: backend-deps
       - notify_on_failure
 
-  # test-frontend:
-  #   docker:
-  #     - image: cimg/node:13.8.0
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys: [frontend-deps]
-  #     - run:
-  #         name: Front-end Unit Test
-  #         command: |
-  #           cd frontend
-  #           npm install
-  #           npm test
-  #     - notify_on_failure
+  test-frontend:
+    docker:
+      - image: cimg/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [frontend-deps]
+      - run:
+          name: Front-end Unit Test
+          command: |
+            cd frontend
+            npm install
+            npm test
+      - notify_on_failure
 
-  # test-backend:
-  #   docker:
-  #     - image: cimg/node:13.8.0
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys: [backend-deps]
-  #     - run:
-  #         name: Back-end Unit Test
-  #         command: |
-  #           cd backend
-  #           npm install
-  #           npm test
-  #     - notify_on_failure
-  #     # - save_cache:
-  #     #     paths: [backend/node_modules]
-  #     #     key: backend-deps
+  test-backend:
+    docker:
+      - image: cimg/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [backend-deps]
+      - run:
+          name: Back-end Unit Test
+          command: |
+            cd backend
+            npm install
+            npm test
+      - notify_on_failure
+      # - save_cache:
+      #     paths: [backend/node_modules]
+      #     key: backend-deps
 
   # scan-frontend:
   #   docker:
@@ -448,10 +448,10 @@ workflows:
     jobs:
       - build-frontend
       - build-backend
-      # - test-frontend:
-      #     requires: [build-frontend]
-      # - test-backend:
-      #     requires: [build-backend]
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
       # - scan-backend:
       #     requires: [build-backend]
       # - scan-frontend:
