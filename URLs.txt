@@ -4,7 +4,7 @@ https://github.com/afkgit/project3-starter
 
 2. Public URL for your S3 Bucket (aka, your green candidate front-end) [URL02]:
 *******************************************************************************
-
+https://udapeople-b11f148.s3.amazonaws.com/index.html
 3. Public URL for your CloudFront distribution (aka, your blue production front-end) [URL03]:
 *********************************************************************************************
 
