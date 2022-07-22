@@ -7,14 +7,14 @@ https://github.com/afkgit/project3-starter
 https://udapeople-ba6a5bb.s3.amazonaws.com/index.html
 3. Public URL for your CloudFront distribution (aka, your blue production front-end) [URL03]:
 *********************************************************************************************
-
+http://d32v1c470wh1y1.cloudfront.net/
 4. Public URLs to deployed application back-end in EC2 [URL04]:
 ***************************************************************
-
+http://23.20.194.250:3030/api/status
 
 5. Public URL to your Prometheus Server [URL05]:
 ************************************************
-
+http://ec2-44-201-213-203.compute-1.amazonaws.com:9090/targets
 
 
 
