@@ -14,5 +14,5 @@ http://d32v1c470wh1y1.cloudfront.net/
 http://54.163.195.121:3030/api/status
 
 5. Public URL to your Prometheus Server [URL05]:
-************************************************
+*************************************************
 http://ec2-3-82-212-129.compute-1.amazonaws.com:9090/targets
