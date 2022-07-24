@@ -5,16 +5,16 @@ https://app.circleci.com/pipelines/github/afkgit/cicd-projectstarter
 
 2. Public URL for your S3 Bucket (aka, your green candidate front-end) [URL02]:
 *******************************************************************************
-http://udapeople-635fc50.s3.amazonaws.com/index.html
+http://udapeople-966f5e7.s3.amazonaws.com/index.html
 
 3. Public URL for your CloudFront distribution (aka, your blue production front-end) [URL03]:
 *********************************************************************************************
-http://d32v1c470wh1y1.cloudfront.net/
+http://dp58u83lyrxfe.cloudfront.net
 
 4. Public URLs to deployed application back-end in EC2 [URL04]:
 ***************************************************************
-http://3.84.94.19:3030/api/status
+http://35.174.155.130:3030/api/status
 
 5. Public URL to your Prometheus Server [URL05]:
 ************************************************
-http://ec2-3-85-231-198.compute-1.amazonaws.com:9090
+http://ec2-44-204-79-215.compute-1.amazonaws.com:9090/targets
